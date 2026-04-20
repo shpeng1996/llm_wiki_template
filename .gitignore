@@ -1,0 +1,15 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Obsidian local state
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/graph.json
+.obsidian/appearance.json
+
+# Local tool settings
+.claude/settings.local.json
+
+# Node modules (if any)
+node_modules/
