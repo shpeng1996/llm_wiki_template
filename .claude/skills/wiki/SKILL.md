@@ -1,17 +1,17 @@
 ---
 name: wiki
-description: 操作 LLM Wiki：/wiki ingest 攝入原始材料、/wiki query <主題> 查詢知識、/wiki lint 執行健檢
-argument-hint: "[ingest | query <主題> | lint]"
+description: Operate the LLM Wiki: /wiki ingest to ingest raw material, /wiki query <topic> to look up knowledge, /wiki lint to run health checks
+argument-hint: "[ingest | query <topic> | lint]"
 ---
 
-完整規範見 `CLAUDE.md`。依 `$ARGUMENTS` 執行對應操作：
+Full specifications are in `CLAUDE.md`. Execute the corresponding operation based on `$ARGUMENTS`:
 
-**ingest** → 依 §3.1：讀取原始材料，判斷類型與 slug，新建或合併 wiki 頁面，更新 `wiki/index.md`，在 `wiki/log.md` 頂部新增記錄，列出異動檔案。
+**ingest** → Per §3.1: Read raw material, determine type and slug, create or merge wiki pages, update `wiki/index.md`, add a record at the top of `wiki/log.md`, list changed files.
 
-**query `<主題>`** → 依 §3.2：讀 `wiki/index.md` 定位相關頁面，讀取 1–3 個頁面作答並標示來源，在 `wiki/log.md` 頂部新增記錄。
+**query `<topic>`** → Per §3.2: Read `wiki/index.md` to locate relevant pages, read 1–3 pages and answer with source citations, add a record at the top of `wiki/log.md`.
 
-**lint** → 依 §3.3：遍歷 `wiki/` 檢查 frontmatter、broken links、stub、90 天未更新，先回報清單等確認再修復，在 `wiki/log.md` 頂部新增記錄。
+**lint** → Per §3.3: Traverse `wiki/` to check frontmatter, broken links, stubs, and pages not updated in 90+ days; report the issue list first and wait for confirmation before fixing; add a record at the top of `wiki/log.md`.
 
 ---
 
-核心規則：`raw/` 不可更動；頁面用繁體中文；內部連結用 `[[slug]]`；log.md append-only。
+Core rules: `raw/` must not be modified; pages use English; internal links use `[[slug]]`; log.md is append-only.
