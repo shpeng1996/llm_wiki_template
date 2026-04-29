@@ -1,31 +1,30 @@
 ---
-title: "研究日誌範本"
+title: "Research Journal Template"
 aliases:
   - "journal template"
-  - "日誌範本"
 tags:
   - meta
   - journal
 date_created: 2026-04-20
-date_updated: 2026-04-20
+date_updated: 2026-04-29
 source_count: 0
 sources: []
 status: complete
 ---
 
-# 研究日誌範本
+# Research Journal Template
 
-> 每次研究 session 或閱讀文獻後，使用此範本建立日誌條目，存於 `wiki/journal/YYYY-MM-DD-<主題>.md`。
+> Use this template to create a journal entry after each research session or literature review. Save entries as `wiki/journal/YYYY-MM-DD-<topic>.md`.
 
 ---
 
-## 使用方式
+## How to Use
 
-複製以下範本，以實際內容替換 `<!-- 提示文字 -->`。
+Copy the template below and replace `<!-- prompt text -->` with actual content.
 
 ```markdown
 ---
-title: "日誌條目 — YYYY-MM-DD：<主題>"
+title: "Journal Entry — YYYY-MM-DD: <Topic>"
 tags:
   - journal
 date: YYYY-MM-DD
@@ -33,38 +32,39 @@ concepts_used: []
 result: ""
 ---
 
-# 日誌條目 — YYYY-MM-DD：<主題>
+# Journal Entry — YYYY-MM-DD: <Topic>
 
-## 研究目標
+## Research Goal
 
-<!-- 本次 session 要探索什麼問題或主題？ -->
-<!-- 哪些 wiki 頁面或原始資料是本次的出發點？ -->
+<!-- What question or topic are you exploring in this session? -->
+<!-- Which wiki pages or raw sources are your starting point? -->
 
-## 研究過程
+## Research Process
 
-<!-- 採取了哪些步驟？做了哪些決策，理由是什麼？ -->
-<!-- 連結相關概念頁面：[[concept/概念名稱]] -->
+<!-- What steps did you take? What decisions did you make, and why? -->
+<!-- Link related concept pages: [[concept/concept-name]] -->
 
-## 結論與收穫
+## Conclusions & Takeaways
 
-<!-- 本次有何發現或結論？ -->
-<!-- 是否有需要攝入 wiki 的新知識？ -->
+<!-- What did you find or conclude? -->
+<!-- Is there new knowledge that should be ingested into the wiki? -->
 
-## 進展順利
-
--
-
-## 待改進
+## What Went Well
 
 -
 
-## 後續行動
+## What Could Be Improved
 
-- [ ] 攝入：（若有新資料需 ingest）
-- [ ] 建立頁面：（若發現應建立的新 wiki 頁面）
-- [ ] 查詢：（下次 session 的問題）
+-
+
+## Next Actions
+
+- [ ] Ingest: (if new material needs to be ingested)
+- [ ] Create page: (if a new wiki page should be created)
+- [ ] Query: (questions to explore in the next session)
 ```
 
-## 修改記錄
+## Changelog
 
-- 2026-04-20：初始建立（模板初始化）
+- 2026-04-29: Converted to English (template conversion)
+- 2026-04-20: Initial creation (template initialization)

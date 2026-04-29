@@ -1,201 +1,201 @@
-# LLM Wiki — 操作手冊 (CLAUDE.md)
+# LLM Wiki — Operations Manual (CLAUDE.md)
 
-> 本文件是 Claude 維護此 Obsidian vault 的唯一行為規範。  
-> **每次操作前必須完整閱讀本文件。**
-
----
-
-## 0. 系統概述
-
-- **Vault 根目錄**：（依使用者設定）
-- **語言原則**：所有 wiki 頁面內容以**繁體中文**為主；英文術語首次出現時加括號標注原文，例如「注意力機制（attention mechanism）」
-- **不可修改區**：`raw/` 目錄下的所有檔案均為原始資料，**Claude 絕對不可更動**
-- **操作類型**：ingest（攝入）、query（查詢）、lint（健檢）
-- **Schema 版本**：1.0（2026-04-12）
+> This document is the sole behavioral specification for Claude maintaining this Obsidian vault.  
+> **Read this document in full before every operation.**
 
 ---
 
-## 1. 目錄結構規範
+## 0. System Overview
 
-### 1.1 wiki/ 子目錄對照表
-
-| 子目錄              | 用途        | 典型內容                                |
-| ---------------- | --------- | ----------------------------------- |
-| `overview/`      | 通論介紹      | 系統說明、「什麼是 X」型的入門頁面                  |
-| `concept/`       | 概念 / 原理   | attention、embedding、tokenization    |
-| `tool/`          | 工具 / 框架   | LangChain、Obsidian、FAISS            |
-| `paper/`         | 論文摘要      | Attention Is All You Need（一篇一檔）     |
-| `presentations/` | 簡報 / 投影片  | 由 wiki 內容產生的 Marp slide decks       |
-| `technique/`     | 技術手法      | Chain-of-Thought、few-shot prompting |
-| `person/`        | 人物 / 組織   | Andrej Karpathy、Anthropic           |
-| `project/`       | 產品 / 研究項目 | GPT-4、Claude、Llama                  |
-| `misc/`          | 雜項        | 跨類或暫時未分類的知識                         |
-
-### 1.2 命名慣例（slug 規則）
-
-- 全小寫英文（或拼音）
-- 空格改為連字號（`-`），**不使用底線（`_`）或特殊字元**
-- 人名：`firstname-lastname`（如 `andrej-karpathy`）
-- 論文：`[年份]-[關鍵詞]-[關鍵詞]`（如 `2017-attention-transformer`）
-- Slug 衝突時加類型後綴：`attention-concept.md` vs `attention-paper.md`
-- 範例：`chain-of-thought.md`、`langchain.md`、`2023-rag-survey.md`
+- **Vault root**: (set by user)
+- **Language principle**: All wiki page content primarily in **English**; non-English terms noted in parentheses on first occurrence where helpful
+- **Read-only zone**: All files under `raw/` are raw source material — **Claude must never modify them**
+- **Operation types**: ingest, query, lint
+- **Schema version**: 1.0 (2026-04-12)
 
 ---
 
-## 2. 頁面格式規範
+## 1. Directory Structure
 
-### 2.1 YAML Frontmatter（必填）
+### 1.1 wiki/ Subdirectory Reference
 
-每個 wiki 頁面（index.md 與 log.md 除外）必須包含：
+| Subdirectory         | Purpose                    | Typical content                                        |
+| -------------------- | -------------------------- | ------------------------------------------------------ |
+| `overview/`          | General introductions      | System docs, "What is X" beginner pages                |
+| `concept/`           | Concepts / principles      | attention, embedding, tokenization                     |
+| `tool/`              | Tools / frameworks         | LangChain, Obsidian, FAISS                             |
+| `paper/`             | Paper summaries            | Attention Is All You Need (one file per paper)         |
+| `presentations/`     | Slides / decks             | Marp slide decks generated from wiki content           |
+| `technique/`         | Technical methods          | Chain-of-Thought, few-shot prompting                   |
+| `person/`            | People / organizations     | Andrej Karpathy, Anthropic                             |
+| `project/`           | Products / research projects | GPT-4, Claude, Llama                                 |
+| `misc/`              | Miscellaneous              | Cross-category or temporarily unclassified knowledge   |
+
+### 1.2 Naming Conventions (slug rules)
+
+- All lowercase English (or romanization)
+- Spaces replaced with hyphens (`-`); **no underscores (`_`) or special characters**
+- People: `firstname-lastname` (e.g. `andrej-karpathy`)
+- Papers: `[year]-[keyword]-[keyword]` (e.g. `2017-attention-transformer`)
+- Slug conflicts: add type suffix — `attention-concept.md` vs `attention-paper.md`
+- Examples: `chain-of-thought.md`, `langchain.md`, `2023-rag-survey.md`
+
+---
+
+## 2. Page Format Specification
+
+### 2.1 YAML Frontmatter (required)
+
+Every wiki page (except `index.md` and `log.md`) must include:
 
 ```yaml
 ---
-title: "頁面標題（繁體中文）"
+title: "Page title"
 aliases:
-  - "英文別名"
-  - "其他中文別名"
+  - "alternative name"
+  - "another alias"
 tags:
-  - 主分類標籤        # 必須與子目錄名稱一致（overview/concept/tool 等）
-  - 次要標籤          # 主題關鍵詞，小寫英文，不超過總計 6 個 tag
+  - primary-tag        # must match subdirectory name (overview/concept/tool etc.)
+  - secondary-tag      # topic keywords, lowercase, max 6 tags total
 date_created: YYYY-MM-DD
 date_updated: YYYY-MM-DD
-source_count: 1       # 本頁面已攝入的原始來源數量
+source_count: 1        # number of raw sources ingested into this page
 sources:
-  - raw/檔案名.md     # 對應 raw/ 下的原始檔案；若無則填 []
-status: draft         # draft | complete | stub
+  - raw/filename.md    # corresponding file under raw/; use [] if none
+status: draft          # draft | complete | stub
 ---
 ```
 
-**status 定義**：
-- `complete`：內容充實，不需要補充
-- `draft`：已有基本內容，仍在整理中
-- `stub`：骨架頁面，僅有標題與少量說明，待後續補充
+**Status definitions**:
+- `complete`: Content is thorough; no additions needed
+- `draft`: Basic content present; still being refined
+- `stub`: Skeleton page with title and minimal content; pending further work
 
-### 2.2 頁面主體標準模板
+### 2.2 Standard Page Body Template
 
 ```markdown
-# 標題
+# Title
 
-> 一句話定義（25 字以內）
+> One-sentence definition (25 words or fewer)
 
-## 核心概念
+## Core Concepts
 
-（主要說明，2–5 段）
+(Main explanation, 2–5 paragraphs)
 
-## [依類型選用的二級標題，見 2.3]
+## [Type-specific second-level heading — see 2.3]
 
-## 與其他概念的關係
+## Relationships
 
-- 相關：[[相關頁面]]
-- 上位概念：[[父概念頁面]]
-- 下位概念：[[子概念頁面]]
+- Related: [[related-page]]
+- Parent concept: [[parent-page]]
+- Child concepts: [[child-page]]
 
-## 參考資料
+## References
 
-- 原始來源：`raw/對應檔案`
-- 外部連結：（若有）
+- Source material: `raw/corresponding-file`
+- External links: (if any)
 
-## 修改記錄
+## Changelog
 
-- YYYY-MM-DD：初始建立（ingest from raw/xxx.md）
+- YYYY-MM-DD: Initial creation (ingest from raw/xxx.md)
 ```
 
-### 2.3 各類型頁面的二級標題慣例
+### 2.3 Recommended Second-Level Headings by Type
 
-| 類型 | 建議二級標題 |
-|------|-------------|
-| `overview` | 核心概念、為什麼重要、常見應用、延伸閱讀 |
-| `concept` | 核心概念、工作原理、常見誤解、應用場景 |
-| `tool` | 核心功能、安裝使用、優缺點、適用場景 |
-| `paper` | 研究問題、核心貢獻、方法概述、實驗結果、影響與評價 |
-| `technique` | 方法描述、使用時機、操作步驟、注意事項 |
-| `person` | 背景簡介、主要貢獻、代表作品、相關連結 |
-| `project` | 產品定位、核心能力、技術架構、發展歷程 |
+| Type        | Suggested headings                                                                     |
+|-------------|----------------------------------------------------------------------------------------|
+| `overview`  | Core Concepts, Why It Matters, Common Applications, Further Reading                    |
+| `concept`   | Core Concepts, How It Works, Common Misconceptions, Use Cases                          |
+| `tool`      | Key Features, Installation & Usage, Pros & Cons, When to Use                          |
+| `paper`     | Research Problem, Key Contributions, Method Overview, Experimental Results, Impact & Reception |
+| `technique` | Method Description, When to Use, Step-by-Step, Caveats                                |
+| `person`    | Background, Major Contributions, Notable Works, Related Links                          |
+| `project`   | Product Overview, Core Capabilities, Technical Architecture, History                  |
 
-### 2.4 Obsidian 內部連結規則
+### 2.4 Obsidian Internal Link Rules
 
-- 引用其他 wiki 頁面：`[[slug]]` 或 `[[slug|顯示文字]]`
-- 連結至子標題：`[[slug#標題名稱]]`
-- **不要使用完整路徑**，Obsidian 以最短唯一路徑自動解析
-- 同一頁面中，某概念**首次**出現才加連結，之後重複提及無需重複加
+- Reference other wiki pages: `[[slug]]` or `[[slug|display text]]`
+- Link to a subsection: `[[slug#section-name]]`
+- **Do not use full paths** — Obsidian resolves by shortest unique path automatically
+- Within a page, only add a link on a concept's **first** occurrence; no need to repeat
 
 ---
 
-## 3. 三大操作流程
+## 3. Three Core Operations
 
-### 3.1 Ingest（攝入）
+### 3.1 Ingest
 
-**觸發**：使用者提供原始材料（文章、筆記、PDF 內容、對話記錄等）
+**Trigger**: User provides raw material (article, notes, PDF content, conversation transcript, etc.)
 
-**步驟**：
+**Steps**:
 
-1. 讀取 `CLAUDE.md`（確認規範版本）
-2. 閱讀原始材料（已存入 `raw/` 或使用者直接提供）
-3. 與使用者討論關鍵重點（可選，依材料複雜度決定）
-4. 判斷類型與目標路徑：
-   - 依內容選擇子目錄（overview/concept/tool/paper/technique/person/project/misc）
-   - 依 1.2 規則生成 slug
-5. 讀取 `wiki/index.md`，確認是否已有同主題頁面：
-   - **已存在** → 讀取現有頁面，合併新資訊，更新 `date_updated` 與 `source_count`
-   - **不存在** → 新建頁面（完整 frontmatter + 主體）
-6. 若新資料與現有頁面有矛盾：保留原有資訊，新增「另一說法」段落，標注來源差異
-7. 更新 `wiki/index.md`：
-   - 在對應分類下新增或確認條目：`- [[slug|中文標題]] — 一句話描述（≤30 字）`
-   - 更新標頭的日期與頁面計數
-8. 在 `wiki/log.md` **頂部**新增一筆記錄（格式見第 5 節）
-9. 列出建立 / 修改的檔案清單，告知使用者
+1. Read `CLAUDE.md` (confirm schema version)
+2. Read the source material (already in `raw/` or provided directly by the user)
+3. Discuss key points with the user (optional, depending on material complexity)
+4. Determine type and target path:
+   - Select subdirectory based on content (overview/concept/tool/paper/technique/person/project/misc)
+   - Generate slug per section 1.2 rules
+5. Read `wiki/index.md` to check whether a page on this topic already exists:
+   - **Exists** → read existing page, merge new information, update `date_updated` and `source_count`
+   - **Does not exist** → create new page (full frontmatter + body)
+6. If new information conflicts with existing content: keep original, add an "Alternative View" paragraph noting the source discrepancy
+7. Update `wiki/index.md`:
+   - Add or confirm entry under the appropriate category: `- [[slug|Title]] — one-sentence description (≤30 words)`
+   - Update the header date and page count
+8. Add a new record at the **top** of `wiki/log.md` (format in section 5)
+9. List all created/modified files and report to the user
 
-**衝突處理**：
-- 不確定分類 → 歸入 `misc/`，標記 `status: draft`，在 log 記錄待分類
-- Slug 衝突 → 加類型後綴（如 `-concept`、`-paper`）
+**Conflict handling**:
+- Uncertain category → place in `misc/`, mark `status: draft`, note in log as pending classification
+- Slug conflict → add type suffix (e.g. `-concept`, `-paper`)
 
-### 3.2 Query（查詢）
+### 3.2 Query
 
-**觸發**：使用者詢問某主題的知識
+**Trigger**: User asks about a topic
 
-**步驟**：
+**Steps**:
 
-1. 讀取 `wiki/index.md`，快速定位相關頁面
-2. 讀取最相關的 1–3 個頁面
-3. 若有必要，追蹤頁面中的 `[[內部連結]]` 繼續閱讀
-4. 以 wiki 內容作答，明確標示引用來源（頁面名稱）
-5. 若 wiki 中無相關資訊：明確告知，並建議攝入新來源
-6. 在 `wiki/log.md` 頂部新增查詢記錄
+1. Read `wiki/index.md` to quickly locate relevant pages
+2. Read the 1–3 most relevant pages
+3. Follow `[[internal links]]` as needed for further reading
+4. Answer using wiki content, clearly citing sources (page names)
+5. If the wiki has no relevant information: state this clearly, and suggest ingesting a new source
+6. Add a query record at the top of `wiki/log.md`
 
-**重要**：有價值的查詢回答（如比較分析、概念整合）可建議使用者將其存入 wiki，作為新頁面或現有頁面的補充。
+**Note**: Valuable query responses (e.g. comparative analyses, concept syntheses) may be suggested to the user for storage as a new page or addition to an existing page.
 
-### 3.3 Lint（健檢）
+### 3.3 Lint
 
-**觸發**：使用者要求健檢，或 wiki 規模較大時定期執行
+**Trigger**: User requests a health check, or periodically as the wiki grows
 
-**步驟**：
+**Steps**:
 
-1. 遍歷 `wiki/` 下所有 `.md` 檔案（排除 `index.md`、`log.md`）
-2. 逐頁檢查：
-   - Frontmatter 是否完整（所有必填欄位齊全）
-   - `status: stub` 的頁面（需補充）
-   - `date_updated` 超過 90 天未更新的頁面
-   - 內部連結是否指向不存在的頁面（broken links）
-3. 確認 `index.md`：
-   - 所有頁面是否都有條目
-   - 是否有條目指向不存在的頁面
-4. 產生 Lint 報告，依嚴重程度排序：
+1. Traverse all `.md` files under `wiki/` (excluding `index.md`, `log.md`)
+2. Check each page for:
+   - Complete frontmatter (all required fields present)
+   - Pages with `status: stub` (need content)
+   - Pages with `date_updated` older than 90 days
+   - Internal links pointing to non-existent pages (broken links)
+3. Review `index.md`:
+   - All pages have an entry
+   - No entries point to non-existent pages
+4. Generate a Lint report sorted by severity:
    - 🔴 Broken links
    - 🟠 Missing / incomplete frontmatter
-   - 🟡 Stub 頁面
-   - 🟢 超過 90 天未更新
-5. **先呈報問題清單，等使用者確認後再修復**（不自動修改）
-6. 在 `wiki/log.md` 頂部新增健檢記錄
+   - 🟡 Stub pages
+   - 🟢 Pages not updated in 90+ days
+5. **Present the issue list first; only fix after user confirmation** (no automatic changes)
+6. Add a lint record at the top of `wiki/log.md`
 
 ---
 
-## 4. index.md 格式規範
+## 4. index.md Format
 
-**路徑**：`wiki/index.md`
+**Path**: `wiki/index.md`
 
 ```markdown
 ---
-title: "LLM Wiki 知識目錄"
+title: "LLM Wiki Knowledge Index"
 tags:
   - meta
   - index
@@ -203,95 +203,95 @@ date_updated: YYYY-MM-DD
 total_pages: N
 ---
 
-# LLM Wiki — 知識目錄
+# LLM Wiki — Knowledge Index
 
-> 最後更新：YYYY-MM-DD | 共 N 個頁面
+> Last updated: YYYY-MM-DD | Total: N pages
 
 ---
 
-## 概覽（Overview）
+## Overview
 
-- [[slug|中文標題]] — 一句話描述
+- [[slug|Title]] — one-sentence description
 
-## 概念（Concept）
+## Concept
 
-## 工具（Tool）
+## Tool
 
-## 論文（Paper）
+## Paper
 
-## 技術手法（Technique）
+## Technique
 
-## 人物（Person）
+## Person
 
-## 專案（Project）
+## Project
 
-## 雜項（Misc）
+## Misc
 ```
 
-**更新規則**：
-- 每次 ingest 後立即更新
-- 標頭的 `date_updated` 與 `total_pages` 必須準確
-- 各分類下無頁面時填 `（尚無頁面）`，不要留空
-- 排序：概念/工具/技術手法按字母，論文按年份倒序，人物按姓氏字母
+**Update rules**:
+- Update immediately after every ingest
+- `date_updated` and `total_pages` in the header must be accurate
+- Write `(no pages yet)` under empty categories; do not leave blank
+- Sorting: concept/tool/technique alphabetically; paper by year descending; person by last name alphabetically
 
 ---
 
-## 5. log.md 格式規範
+## 5. log.md Format
 
-**路徑**：`wiki/log.md`  
-**規則**：append-only，**禁止刪除或修改已有條目**，最新條目永遠在最上方
+**Path**: `wiki/log.md`  
+**Rules**: append-only — **never delete or modify existing entries**; newest entry always at the top
 
 ```markdown
 ---
-title: "LLM Wiki 操作日誌"
+title: "LLM Wiki Operation Log"
 tags:
   - meta
   - log
 ---
 
-# LLM Wiki — 操作日誌
+# LLM Wiki — Operation Log
 
-> 本日誌為 append-only。最新條目在最上方。禁止刪除或修改已有條目。
-
----
-
-## [YYYY-MM-DD] ingest | 頁面標題
-
-- **來源**：raw/檔案名.md 或「使用者直接提供」
-- **動作**：新建 wiki/子目錄/slug.md ／ 更新 wiki/子目錄/slug.md
-- **摘要**：一到兩句話說明攝入的內容
-- **關聯頁面**：[[頁面1]]、[[頁面2]]
+> This log is append-only. Newest entries at top. Do not delete or modify existing entries.
 
 ---
 
-## [YYYY-MM-DD] query | 查詢主題
+## [YYYY-MM-DD] ingest | Page Title
 
-- **問題**：使用者問了什麼
-- **使用頁面**：[[頁面1]]、[[頁面2]]
-- **結果**：found（找到）/ not-found（未找到）/ partial（部分找到）
+- **Source**: raw/filename.md or "provided directly by user"
+- **Action**: created wiki/subdir/slug.md / updated wiki/subdir/slug.md
+- **Summary**: One or two sentences describing what was ingested
+- **Related pages**: [[page1]], [[page2]]
 
 ---
 
-## [YYYY-MM-DD] lint | 健檢報告
+## [YYYY-MM-DD] query | Topic
 
-- **檢查頁面數**：N
-- **發現問題**：X 個（broken links: a, missing frontmatter: b, stale: c, stub: d）
-- **已修復**：列出修復項目，或「本次僅回報，未修復」
+- **Question**: What the user asked
+- **Pages used**: [[page1]], [[page2]]
+- **Result**: found / not-found / partial
+
+---
+
+## [YYYY-MM-DD] lint | Health Check
+
+- **Pages checked**: N
+- **Issues found**: X (broken links: a, missing frontmatter: b, stale: c, stub: d)
+- **Fixed**: list of fixes applied, or "reported only, no fixes made"
 
 ---
 ```
 
 ---
 
-## 6. 版本資訊
+## 6. Version Information
 
-| 欄位 | 值 |
-|------|----|
-| Schema 版本 | 1.0 |
-| 建立日期 | 2026-04-12 |
-| 最後更新 | 2026-04-12 |
+| Field          | Value      |
+|----------------|------------|
+| Schema version | 1.0        |
+| Created        | 2026-04-12 |
+| Last updated   | 2026-04-29 |
 
-**版本更新時機**：
-- 新增子目錄類型 → 更新第 1.1 節，版本號小版號 +1（1.0 → 1.1）
-- 變更 frontmatter 必填欄位 → 版本號大版號 +1（1.x → 2.0）
-- 每次更新同步修改本節的「最後更新」日期
+**When to update version**:
+- Adding a new subdirectory type → update section 1.1, increment minor version (1.0 → 1.1)
+- Changing required frontmatter fields → increment major version (1.x → 2.0)
+- Always update "Last updated" date in this section when making changes

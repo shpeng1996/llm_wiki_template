@@ -1,84 +1,84 @@
 ---
-title: "LLM Wiki 儀表板"
+title: "LLM Wiki Dashboard"
 aliases:
   - "dashboard"
-  - "儀表板"
 tags:
   - meta
   - dashboard
 date_created: 2026-04-20
-date_updated: 2026-04-20
+date_updated: 2026-04-29
 source_count: 0
 sources: []
 status: complete
 ---
 
-# LLM Wiki — 儀表板
+# LLM Wiki — Dashboard
 
-> 由 [Dataview](https://github.com/blacksmithgu/obsidian-dataview) 插件驅動的動態查詢面板。
+> Dynamic query panel powered by the [Dataview](https://github.com/blacksmithgu/obsidian-dataview) plugin.
 
-## 待補充頁面（Stub）
+## Stub Pages
 
-需要補充內容的骨架頁面。
+Skeleton pages that need content.
 
 ```dataview
-TABLE date_updated AS "最後更新", source_count AS "來源數"
+TABLE date_updated AS "Last Updated", source_count AS "Sources"
 FROM "wiki"
 WHERE status = "stub"
 SORT date_updated ASC
 ```
 
-## 草稿中頁面（Draft）
+## Draft Pages
 
-仍在整理中的頁面。
+Pages still being refined.
 
 ```dataview
-TABLE date_updated AS "最後更新", source_count AS "來源數"
+TABLE date_updated AS "Last Updated", source_count AS "Sources"
 FROM "wiki"
 WHERE status = "draft"
 SORT date_updated ASC
 ```
 
-## 最近更新
+## Recent Updates
 
-最近修改的 15 個頁面。
+The 15 most recently modified pages.
 
 ```dataview
-TABLE tags, status, date_updated AS "最後更新"
+TABLE tags, status, date_updated AS "Last Updated"
 FROM "wiki"
 WHERE file.name != "index" AND file.name != "log" AND file.name != "dashboard" AND file.name != "flashcards"
 SORT date_updated DESC
 LIMIT 15
 ```
 
-## 來源最多的頁面
+## Pages with Most Sources
 
 ```dataview
-TABLE source_count AS "來源數", tags, date_updated AS "最後更新"
+TABLE source_count AS "Sources", tags, date_updated AS "Last Updated"
 FROM "wiki/concept" OR "wiki/tool" OR "wiki/paper" OR "wiki/technique" OR "wiki/person" OR "wiki/project"
 SORT source_count DESC
 LIMIT 10
 ```
 
-## 孤立頁面（無內連結）
+## Orphan Pages (No Inbound Links)
 
-可能缺少其他頁面引用的頁面（需人工確認，Dataview 無法直接檢查 inbound links）。
+Pages that may not be referenced by other pages (requires manual review — Dataview cannot check inbound links directly).
 
 ```dataview
-TABLE tags, date_updated AS "最後更新"
+TABLE tags, date_updated AS "Last Updated"
 FROM "wiki/concept" OR "wiki/tool" OR "wiki/paper" OR "wiki/technique" OR "wiki/person" OR "wiki/project" OR "wiki/overview" OR "wiki/misc"
 WHERE length(file.inlinks) = 0
 SORT date_updated ASC
 ```
 
-## 各分類頁面一覽
+## All Pages by Category
 
 ```dataview
-TABLE tags, status, date_updated AS "最後更新"
+TABLE tags, status, date_updated AS "Last Updated"
 FROM "wiki/concept" OR "wiki/tool" OR "wiki/paper" OR "wiki/technique" OR "wiki/person" OR "wiki/project" OR "wiki/overview" OR "wiki/misc"
 SORT file.name ASC
 ```
 
-## 修改記錄
+## Changelog
 
-- 2026-04-20：初始建立（模板初始化）
+- 2026-04-29: Converted to English (template conversion)
+- 2026-04-20: Initial creation (template initialization)

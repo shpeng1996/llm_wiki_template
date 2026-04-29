@@ -1,80 +1,81 @@
 ---
-title: "LLM Wiki 概念介紹"
+title: "LLM Wiki Introduction"
 aliases:
   - "LLM Wiki intro"
-  - "llm wiki 說明"
-  - "第二大腦系統"
+  - "llm wiki overview"
+  - "second brain system"
 tags:
   - overview
   - meta
   - wiki
   - pkm
 date_created: 2026-04-20
-date_updated: 2026-04-20
+date_updated: 2026-04-29
 source_count: 0
 sources: []
 status: complete
 ---
 
-# LLM Wiki 概念介紹
+# LLM Wiki Introduction
 
-> 一個由大型語言模型（LLM）持續維護的個人知識庫，以 Obsidian vault 為載體，讓知識得以累積而非每次重新推導。
+> A personal knowledge base continuously maintained by a large language model (LLM), hosted in an Obsidian vault, letting knowledge accumulate rather than being re-derived each time.
 
-## 核心概念
+## Core Concepts
 
-LLM Wiki 是一套以 Claude 等大型語言模型（large language model）為主要編輯者的個人知識管理系統（personal knowledge management，PKM）。使用者提供原始資料，由 LLM 依照固定的 Schema（見根目錄的 `CLAUDE.md`）進行整理、分類、摘要，並以結構化的 Markdown 頁面儲存於 Obsidian vault 中。
+LLM Wiki is a personal knowledge management (PKM) system where Claude and similar large language models serve as the primary editors. The user provides raw source material; the LLM organizes, classifies, and summarizes it according to a fixed schema (see `CLAUDE.md` in the vault root), then stores it as structured Markdown pages within an Obsidian vault.
 
-**與 RAG 系統的核心差異**：一般的檢索增強生成（retrieval-augmented generation，RAG）系統在每次問答時才從原始文件中即時提取資訊，知識不會累積；LLM Wiki 則相反——每次攝入新資料時，LLM 主動將知識整合進既有的 wiki 頁面，更新交叉連結，標注矛盾之處，讓知識庫持續增長且越來越完整。
+**Key difference from RAG systems**: A typical retrieval-augmented generation (RAG) system extracts information from raw documents at query time — knowledge never accumulates. LLM Wiki works the opposite way: each time new material is ingested, the LLM actively integrates that knowledge into existing wiki pages, updates cross-links, and flags contradictions, so the knowledge base continuously grows and becomes more complete.
 
-本系統的核心理念是「讓 LLM 做知識工人，讓人類做知識決策者」：LLM 負責格式整理、交叉連結、摘要提煉等重複性工作；使用者負責決定什麼值得收錄、如何分類，以及何時需要修正方向。
+The system's core philosophy is **"let the LLM be the knowledge worker, let the human be the knowledge decision-maker"**: the LLM handles repetitive tasks like formatting, cross-linking, and summarization; the user decides what's worth capturing, how to classify it, and when to change direction.
 
-## 為什麼重要
+## Why It Matters
 
-傳統個人知識庫面臨的最大挑戰是**維護成本**——收集資料容易，但整理分類、建立連結、保持更新的持續心力往往讓系統逐漸崩解。LLM Wiki 透過將維護工作外包給 LLM，大幅降低使用者的認知負荷：
+The biggest challenge with traditional personal knowledge bases is **maintenance cost** — collecting material is easy, but the sustained effort required to organize, link, and update it causes most systems to gradually collapse. LLM Wiki dramatically reduces cognitive load by outsourcing maintenance to the LLM:
 
-- LLM 不會忘記更新交叉連結
-- LLM 可以在一次操作中同時觸及 10–15 個相關頁面
-- LLM 不怕重複性工作，維護成本近乎為零
+- The LLM never forgets to update cross-links
+- The LLM can touch 10–15 related pages in a single operation
+- The LLM doesn't fatigue from repetitive work; maintenance cost approaches zero
 
-同時，以 Obsidian 為前端，使用者可以在圖形界面瀏覽知識圖譜（Graph View）、搜尋全文、查看反向連結，無需學習任何特殊工具。使用者的工作模式：LLM 在一側進行編輯，Obsidian 在另一側即時呈現結果。
+With Obsidian as the frontend, users can browse the knowledge graph (Graph View), search full text, and view backlinks — no special tooling required. The working model: LLM edits on one side, Obsidian renders results on the other in real time.
 
-## 系統架構
+## System Architecture
 
-本 vault 分為三個層次：
+The vault has three layers:
 
-**原始資料層**（`raw/`）：使用者蒐集的原始文件——文章、論文、筆記、截圖。LLM 只讀不寫，這是系統的唯一真實來源。
+**Raw data layer** (`raw/`): Source documents collected by the user — articles, papers, notes, screenshots. The LLM reads but never writes here; this is the system's single source of truth.
 
-**知識層**（`wiki/`）：LLM 生成與維護的結構化頁面。依類型分子目錄，每個頁面有完整的 YAML frontmatter 與內部連結。這一層是系統的核心產出。
+**Knowledge layer** (`wiki/`): Structured pages generated and maintained by the LLM. Organized into subdirectories by type; every page has complete YAML frontmatter and internal links. This layer is the system's core output.
 
-**規範層**（`CLAUDE.md`）：告訴 LLM 如何操作的 Schema 文件。定義了目錄結構、命名慣例、頁面格式，以及三大操作的詳細流程。
+**Schema layer** (`CLAUDE.md`): The schema document that tells the LLM how to operate. Defines directory structure, naming conventions, page format, and detailed workflows for all three operations.
 
-**兩個特殊導航檔**：
-- [[index]]：全域目錄，分類索引所有頁面，LLM 的「入口點」
-- [[log]]：操作日誌，append-only 的操作記錄，提供 wiki 的演化時間軸
+**Two special navigation files**:
+- [[index]]: Global directory; categorized index of all pages; the LLM's entry point
+- [[log]]: Operation log; append-only record of all operations; provides the wiki's evolution timeline
 
-## 常見應用
+## Common Applications
 
-- **閱讀筆記**：整理書籍、部落格文章、論文，建立 per-source 摘要頁
-- **概念字典**：AI/ML 術語、程式設計概念的結構化解釋
-- **工具評測**：比較不同框架、函式庫的特性，記錄實際使用心得
-- **研究追蹤**：深入某主題數週或數月，逐步建立有論點的綜合分析
-- **人物檔案**：研究者、工程師的主要貢獻與代表作品
-- **個人成長**：日記條目、目標追蹤、心理洞察的結構化整理
+- **Reading notes**: Summaries of books, blog posts, and papers; per-source summary pages
+- **Concept dictionary**: Structured explanations of AI/ML terminology and programming concepts
+- **Tool evaluations**: Comparing frameworks and libraries; recording hands-on experience
+- **Research tracking**: Exploring a topic over weeks or months; building up a well-argued synthesis
+- **Person profiles**: Researchers' and engineers' key contributions and notable works
+- **Personal growth**: Structured journaling, goal tracking, and psychological insights
 
-## 三大操作
+## Three Core Operations
 
-**Ingest（攝入）**：將原始資料整理為結構化 wiki 頁面。LLM 讀取來源、提取要點、建立或更新頁面、更新 index 與 log。
+**Ingest**: Turn raw material into structured wiki pages. The LLM reads the source, extracts key points, creates or updates pages, and updates the index and log.
 
-**Query（查詢）**：從 wiki 中提取資訊回答問題。LLM 先讀 index，再讀相關頁面，給出有來源引用的回答。有價值的回答本身也可以存回 wiki。
+**Query**: Extract information from the wiki to answer questions. The LLM reads the index first, then relevant pages, and delivers a cited answer. Valuable responses can themselves be stored back into the wiki.
 
-**Lint（健檢）**：定期健檢整個 vault 的一致性——找出斷連結、缺少 frontmatter 的頁面、過時內容，並提出修復建議。
+**Lint**: Periodic health check of the entire vault's consistency — finds broken links, pages missing frontmatter, and stale content, then offers repair suggestions.
 
-## 延伸閱讀
+## Further Reading
 
-- 完整操作規範：`CLAUDE.md`（vault 根目錄）
-- 所有頁面目錄：[[index]]
-- 操作歷史記錄：[[log]]
+- Full operations specification: `CLAUDE.md` (vault root)
+- All pages directory: [[index]]
+- Operation history: [[log]]
 
-## 修改記錄
+## Changelog
 
-- 2026-04-20：初始建立（模板初始化）
+- 2026-04-29: Converted to English (template conversion)
+- 2026-04-20: Initial creation (template initialization)
